@@ -1,0 +1,50 @@
+1. Created SuperUser
+    arunkumar-js25 /django
+
+
+2. Added Staticfile option in settings.py:
+	'libraries' : {
+                'staticfiles': 'django.templatetags.static', 
+            }
+
+3. Added File storage capability
+
+    #FileSystem Storage
+        from django.shortcuts import render
+        from django.conf import settings
+        from django.core.files.storage import FileSystemStorage
+
+        def upload(request):
+            folder='my_folder/' 
+            if request.method == 'POST' and request.FILES['myfile']:
+                myfile = request.FILES['myfile']
+                fs = FileSystemStorage(location=folder) #defaults to   MEDIA_ROOT  
+                filename = fs.save(myfile.name, myfile)
+                file_url = fs.url(filename)
+                return render(request, 'upload.html', {
+                    'file_url': file_url
+                })
+            else:
+                 return render(request, 'upload.html')
+
+    #default_storage
+        from django.core.files.storage import default_storage
+
+        #  Saving POST'ed file to storage
+        file = request.FILES['myfile']
+        file_name = default_storage.save(file.name, file)
+
+        #  Reading file from storage
+        file = default_storage.open(file_name)
+        file_url = default_storage.url(file_name)
+
+4. Docker image creation
+    """
+    Reference : https://blog.logrocket.com/dockerizing-django-app/
+                https://blog.logrocket.com/containerizing-a-simple-django-application-with-docker-and-docker-compose/
+                https://www.youtube.com/watch?v=XDaQAmkDFX4
+    """
+
+5. docker push to hub
+    docker tag handwrittenrecognition-web arunkumarjs25/handwrittenrecognition-web
+    docker push arunkumarjs25/handwrittenrecognition-web

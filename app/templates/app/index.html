@@ -1,0 +1,27 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Hand Writting Recognition</h1>
+    <p class="lead">Upload your handwritten notes and get the text to copy</p>
+
+</div>
+
+<div class="">
+    <h2>File Upload</h2>
+    <form action="/success" method="post" enctype="multipart/form-data"> {% csrf_token %}
+      <div>
+            <label for="file">Choose file to upload</label>
+            <input type="file" id="file" name="file" multiple />
+      </div>
+      <div>
+            <button>Submit</button>
+      </div>
+    </form>
+</div>
+
+
+{% block mldata %}{% endblock %}
+
+{% endblock %}
