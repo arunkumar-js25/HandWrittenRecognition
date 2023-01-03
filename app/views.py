@@ -7,6 +7,7 @@ from django.shortcuts import render
 from django.http import HttpRequest
 from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import default_storage,FileSystemStorage
+from app.handWrittenRecognition import *
 
 def home(request):
     """Renders the home page."""
@@ -35,7 +36,11 @@ def upload_file(request):
 
       print('file uploaded successfully');
       print(myfile.name);
-      return render(request,'app/result.html',{ 'title':'Test Result', 'year':datetime.now().year, 'mldata':myfile.name });
+      inputImagePath = folder + myfile.name
+      mlOutput = extractImage(inputImagePath)
+      print("mlOutput:")
+      print(mlOutput)
+      return render(request,'app/result.html',{ 'title':'Test Result', 'year':datetime.now().year, 'mldata':mlOutput });
 
 def contact(request):
     """Renders the contact page."""
